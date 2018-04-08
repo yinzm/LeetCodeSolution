@@ -4,19 +4,17 @@ using namespace std;
 class Solution {
 public:
     int searchInsert(vector<int>& nums, int target) {
-        int l = 0, r = nums.size(), mid = l+(r-l)/2;
+        int len = nums.size();
+        int l = 0, r = len, mid = l+(r-l)/2;
         while (l < r) {
-            if (nums[mid] > target) {
+            if (nums[mid] >= target) {
                 r = mid;
-            } else if (nums[mid] < target) {
-                l = mid+1;
             } else {
-                return mid;
+                l = mid+1;
             }
             mid = l+(r-l)/2;
         }
-        return l;// upper_bound
-        // if you use "r = mid-1, l = mid", you will get the lower_bound
+        return r;
     }
 };
 
