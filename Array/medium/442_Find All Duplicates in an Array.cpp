@@ -4,17 +4,26 @@ using namespace std;
 class Solution {
 public:
     vector<int> findDuplicates(vector<int>& nums) {
-        int len = nums.size();
-        if (len <= 0) return 0;
-        for (int i = 0; i < len; ++i) {
-            if (nums[i] != i+1) {
-
-                int temp = nums[i];
-                nums[i] = nums[nums[i]-1];
-                nums[ nums[i]-1 ] = temp;
-                i--;
+        vector<int> ans;
+        int idx = 0, len = nums.size();
+        while (idx < len) {
+            if (nums[idx] != idx+1) {
+                int toIdx = nums[idx]-1;
+                if (nums[toIdx] != toIdx+1) {
+                    swap(nums[idx], nums[toIdx]);
+                } else {
+                    idx++;
+                }
+            } else {
+                idx++;
             }
         }
+        for (int i = 0; i < len; ++i) {
+            if (nums[i] != i+1) {
+                ans.push_back(nums[i]);
+            }
+        }
+        return ans;
     }
 };
 
