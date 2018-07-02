@@ -3,32 +3,23 @@ using namespace std;
 
 class Solution {
 public:
-    void dfs(vector<vector<int>>& ans, vector<bool>& vis, vector<int>& nums, int cur, int sum, int k, int n) {
-        if (cur >= k) {
-            if (sum == n) {
-                ans.push_back(nums);
-            }
+    vector<vector<int>> combinationSum3(int k, int n) {
+        vector<vector<int>> res;
+        vector<int> ans;
+        dfs(res, ans, 1, k, n, 0);
+        return res;
+    }
+    void dfs(vector<vector<int>>& res, vector<int>& ans, int start, int k, int n, int sum) {
+        if (ans.size() == k && sum == n) {
+            res.push_back(ans);
             return ;
         }
         if (sum > n) return ;
-        int i = cur?nums[cur-1]+1:1;
-        for (; i <= 9; ++i) {
-            if (!vis[i]) {
-                vis[i] = true;
-                nums[cur] = i;
-                dfs(ans, vis, nums, cur+1, sum+i, k, n);
-                vis[i] = false;
-            }
+        for (int i = start; i <= 9; ++i) {
+            ans.push_back(i);
+            dfs(res, ans, i+1, k, n, sum+i);
+            ans.pop_back();
         }
-    }
-
-    vector<vector<int>> combinationSum3(int k, int n) {
-        vector<bool> vis(10, false);
-        vector<vector<int>> ans;
-        vector<int> nums(k, 0);
-        vis[0] = true;
-        dfs(ans, vis, nums, 0, 0, k, n);
-        return ans;
     }
 };
 
